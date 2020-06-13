@@ -1,0 +1,65 @@
+.TH FETCHTIME 1 fetchtime-VERSION
+\" Section:NAME
+.SH NAME
+fetchtime \- Fetch time from NTP server.
+\" Section:SYNOPSIS
+.SH SYNOPSIS
+.B fetchtime
+.RB [ -h ]
+.RB [ -p ]
+.RB [ -s ]
+.RB [ -u ]
+.B HOST
+\" Section:DESCRIPTION
+.SH DESCRIPTION
+fetchtime is a simple program to fetch time from NTP servers. It can either
+print the retrieved time to the stdout, or update the system clock.
+.P
+fetchtime does not implement the full time synchronization protocol as
+specified by NTP, and does not continuously poll NTP server. Instead it sends a
+single request to the server and retrieves time from a single server response.
+This makes correction of transmission delays impossible.
+.P
+If the user requests their system time to be updated then fetchtime will simply
+set the system clock from the retrieved time in a single step. No gradual
+system clock adjustment will be performed.
+\" Section:OPTIONS
+.SH OPTIONS
+.TP
+.B -h
+Print usage.
+.TP
+.B -p
+Pretty print NTP time to stdout (default).
+.TP
+.B -s
+Set the system clock from the NTP time.
+.TP
+.B -u
+Print NTP time as unixtime to stdout.
+\" Section:EXAMPLES
+.SH EXAMPLES
+\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.B Print time to stdout
+.nf
+.RS
+$ fetchtime pool.ntp.org
+Wed Jan  1 00:00:01 2020
+.RE
+.fi
+\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.B Set system time
+.nf
+.RS
+$ fetchtime -s pool.ntp.org
+.RE
+.fi
+\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\" Section:CREDITS
+.SH CREDITS
+fetchtime relies on NTP protocol definitions from header file
+.B ntp.h
+belonging to the
+.B openntp
+package.
+
